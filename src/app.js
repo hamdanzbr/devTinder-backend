@@ -2,35 +2,30 @@ const express=require('express');
 
 const app=express()
 
-app.get('/user',(req,res)=>{
-    const data={name:'Hamdan',age:30}
-    res.send(data)
-}),
-
-app.post('/user',(req,res)=>{
-    console.log('user added successfully');
-    res.send('user added')
+app.get('/user',[(req,res,next)=>{
+    console.log('rloute handler 1');
+    // res.send('rout handler 1')
+    next()
     
-})
+},
+(req,res,next)=>{
+console.log('route handler 2');
+// res.send('rloute handler 2')
+next()
+}],
 
-app.patch('/user',(req,res)=>{
-    console.log('user updated partially');
-    res.send('updated partially')
-})
+[(req,res,next)=>{
+console.log('route handler 3');
+// res.send('rloute handler 3');
+next()
+},
+(req,res,next)=>{
+console.log('route handler 4');
+res.send('rloute handler 4')
+}]
 
-app.put('/user',(req,res)=>{
-    console.log('user updated');
-    res.send('updated the user')
-})
+),
 
-app.delete('/user',(req,res)=>{
-    console.log('user deleted');
-    res.send('deleted user')
-})
-
-app.use('/test',(req,res)=>{
-    res.send('test from the server')
-})
 
 
 
