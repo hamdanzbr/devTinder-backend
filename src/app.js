@@ -2,32 +2,27 @@ const express=require('express');
 
 const app=express()
 
-app.get('/user',[(req,res,next)=>{
-    console.log('rloute handler 1');
-    // res.send('rout handler 1')
-    next()
-    
-},
-(req,res,next)=>{
-console.log('route handler 2');
-// res.send('rloute handler 2')
-next()
-}],
+const {adminAuth,userAuth}=require('./middlewares/auth')
 
-[(req,res,next)=>{
-console.log('route handler 3');
-// res.send('rloute handler 3');
-next()
-},
-(req,res,next)=>{
-console.log('route handler 4');
-res.send('rloute handler 4')
-}]
+app.use('/admin',adminAuth)
 
-),
+app.get('/admin/getUsers',(req,res)=>{
+    console.log('user data fetched');
+    res.send('user data fetched!!')
+})
 
+app.get('/admin/deleteUser', (req,res)=>{
+    console.log('user data deleted');
+    res.send('user data deleted!!')
+})
 
+app.post('/user/login',(req,res)=>{
+    res.send('user loggined')
+})
 
+app.get('/user/getData',userAuth,(req,res)=>{
+    res.send('data fetched successfully')
+})
 
 app.listen(4000,console.log('server running on 4000')
 )
